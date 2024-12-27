@@ -1,0 +1,43 @@
+<%= turbo_frame_tag "destinations" do %>
+  <%= form_with url: search_flights_url, method: :get, html: {data: {controller: "oneway-return", turbo_frame: "_top"}, class: "flex flex-col space-y-3"} do |form| %>
+    <div class="flex flex-col lg:flex-row items-start lg:items-center space-y-2 lg:space-y-0 lg:space-x-6 lg:px-3">
+      <%= form.select :travel_type, [["One Way", "one_way"], ["Round Trip", "round_trip"]], {}, 'data-oneway-return-target' => 'selection', 'data-action' => 'oneway-return#showAdditionalFields', class: "flex items-center w-full lg:w-auto bg-gray-200 gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100" %>
+      <div class="flex items-center lg:space-x-1 space-x-4">
+        <%= form.label :adults, class: "text-sm" %>
+        <%= form.number_field :adults, class: "w-16 bg-gray-200 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition-all delay-75", value: 1 %>
+      </div>
+      <div class="flex items-center space-x-1">
+        <%= form.label :children, class: "text-sm" %>
+        <%= form.number_field :children, class: "w-16 bg-gray-200 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition-all delay-75", value: 0 %>
+      </div>
+      <div class="flex items-center lg:space-x-1 space-x-3">
+        <%= form.label :infants, class: "text-sm" %>
+        <%= form.number_field :infants, class: "w-16 bg-gray-200 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition-all delay-75", value: 0 %>
+      </div>
+      <%= form.select :travel_class, [["Economy", "ECONOMY"], ["Premium Economy", "PREMIUM_ECONOMY"], ["Business", "BUSINESS"], ["First", "FIRST"]], {}, class: "flex items-center w-full lg:w-auto bg-gray-200 gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100" %>
+      <div class="flex items-center space-x-2">
+        <%= form.radio_button :non_stop, true, class: "h-4 w-4" %>
+        <%= form.label :non_stop, "Non Stop", class: "text-lg lg:text-base" %>
+      </div>
+      <div class="w-full lg:w-56 lg:text-xs relative">
+        <%= form.currency_select :currency_code, ["TZS", "USD", "EUR"], {}, {data: {controller: "slim"}} %>
+        <%= image_tag "currency_change.svg", class: "absolute top-3 left-3 h-6 w-6" %>
+      </div>
+    </div>
+    <div class="flex-col lg:flex-row lg:items-center lg:justify-center space-y-2 lg:space-x-1">
+      <div class="block lg:inline-block w-[300px] relative">
+        <%= form.select :origin_location_code, @airports.map{|a| [a.city_with_airport_name, a.iata]}, {include_blank: "From ?"}, {data: {controller: "slim"}} %>
+        <%= image_tag "airplane-up-gray.svg", class: "absolute top-3 left-3 h-6 w-6" %>
+      </div>
+      <div class="block lg:inline-block w-[300px] relative">
+        <%= form.select :destination_location_code, @airports.map{|a| [a.city_with_airport_name, a.iata]}, {include_blank: "To ?"}, {data: {controller: "slim"}} %>
+        <%= image_tag "airplane-down-gray.svg", class: "absolute top-3 left-3 h-6 w-6" %>
+      </div>
+      <div class="inline-block"> 
+        <%= render partial: 'one_way', locals: {form: form} %>
+        <%= render partial: 'return_way', locals: {form: form} %>
+      </div>
+      <%= form.button "Search", class: "w-full lg:w-[70px] px-2 py-[12px] rounded-lg bg-gradient-to-b from-blue-600 to-blue-700 text-white font-bold" %>
+    </div>
+  <% end %>
+<% end %>

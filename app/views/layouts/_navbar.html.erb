@@ -1,0 +1,17 @@
+<nav class="h-20 flex items-center justify-between px-8 border-b border-slate-300 w-full fixed top-0 bg-opacity-100 z-30 bg-gray-50">
+  <div class="flex items-center space-x-6" data-controller="sidebar">
+    <button class="inline-blockblock lg:hidden" data-action="click->sidebar#toggleMobileSidebar"><%= image_tag "bars.svg", class: "h-4 w-4 md:h-5 md:w-5" %></button>
+    <button class="hidden lg:inline-block" data-action="click->sidebar#toggleLargeSidebar"><%= image_tag "bars.svg", class: "h-4 w-4 md:h-5 md:w-5" %></button>
+    <%= link_to root_url, class: "" do %>
+      <%= image_tag "logo_copy.png", class: "h-12 lg:h-16 w-20 lg:w-28" %>
+    <% end %>
+  </div>
+  <div class="flex items-center space-x-6">
+    <button data-controller="screenfull"><%= image_tag "fullscreen-arrows.svg", class: "hidden lg:block h-5 w-5", id: "fullscreen-button" %></button>
+    <div><%= image_tag "heart.svg", class: "h-6 w-6 md:h-7 md:w-7" %></div>
+    <button class="hidden px-3 py-2 border border-gray-600 rounded-lg md:flex items-center gap-2 text-lg">
+      <%= image_tag "user-dualtone.svg", class: "h-4 w-4" %> Sign in
+    </button>
+    <button class="flex md:hidden"><%= image_tag "user-dualtone.svg", class: "h-6 w-6" %></button>
+  </div>
+</nav>

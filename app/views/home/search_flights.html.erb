@@ -1,0 +1,86 @@
+<div class="my-28">
+  <% if !!@response %>
+    <div class="grid grid-cols-1 lg:grid-cols-2 lg:gap-10 mx-3 lg:mx-10">
+      <% @response.data.each do |r| %>
+        <div>
+          <p>Last ticketing date: <%= r["lastTicketingDate"] %></p>
+          <p>Number of bookable seats: <%= r["numberOfBookableSeats"] %></p>
+          <p>Itineraries: <%= r["itineraries"] %></p>
+          <p>Price: <%= r["price"] %></p>
+          <p>Price options: <%= r["pricingOptions"] %></p>
+          <p>Validating airline codes: <%= r["validatingAirlineCodes"] %></p>
+          <p>TravelerPricings: <%= r["travelerPricings"] %></p>
+        </div>
+        <div class="bg-white px-3 lg:px-10 lg:py-8 py-2 mb-4 lg:mb-0 rounded-lg shadow flex flex-col justify-between">
+          <div class="flex items-center justify-between">
+            <div class="flex flex-col">
+              <p class="text-lg lg:text-2xl font-semibold"><%= @origin_location %> - <%= @destination_location %></p>
+              <p class="text-sm lg:text-base text-gray-400"><%= @departuredate %></p>
+            </div>
+            <div class="text-base lg:text-lg text-gray-400"><%= r["itineraries"][0]["duration"] %></div>
+          </div>
+          <div class="flex items-center justify-between">
+            <div class="flex space-x-1">
+              <div class="flex flex-col">
+                <div class="text-lg lg:text-xl font-semibold"><%= r["itineraries"][0]["segments"][0]["departure"]["iataCode"] %></div>
+                <div class="text-sm lg:text-base">T <%= r["itineraries"][0]["segments"][0]["departure"]["terminal"] %></div>
+                <div class="text-xs lg:text-sm"><%= r["itineraries"][0]["segments"][0]["departure"]["at"].to_datetime.strftime("%e %b %Y - %l:%M %p") %></div>
+              </div>
+              
+              <div class="flex flex-col">
+                <div class="text-lg lg:text-xl font-semibold"><%= r["itineraries"][0]["segments"][0]["arrival"]["iataCode"] %></div>
+                <div class="text-sm lg:text-base">T <%= r["itineraries"][0]["segments"][0]["arrival"]["terminal"] %></div>
+                <div class="text-xs lg:text-sm"><%= r["itineraries"][0]["segments"][0]["arrival"]["at"].to_datetime.strftime("%e %b %Y - %l:%M %p") %></div>
+              </div>
+              <div><%= r["itineraries"][0]["segments"][0]["duration"] %></div>
+              <div>
+                <%= r["itineraries"][0]["segments"][0]["carrierCode"] %>
+                <%= r["itineraries"][0]["segments"][0]["aircraft"]["code"] %>
+                <%= r["itineraries"][0]["segments"][0]["number"] %>
+              </div>
+            </div>
+
+            <div class="flex space-x-1">
+              <div class="flex flex-col">
+                <div class="text-lg lg:text-xl font-semibold"><%= r["itineraries"][0]["segments"][0]["departure"]["iataCode"] %></div>
+                <div class="text-sm lg:text-base">T <%= r["itineraries"][0]["segments"][0]["departure"]["terminal"] %></div>
+                <div class="text-xs lg:text-sm"><%= r["itineraries"][0]["segments"][0]["departure"]["at"].to_datetime.strftime("%e %b %Y - %l:%M %p") %></div>
+              </div>
+              
+              <div class="flex flex-col">
+                <div class="text-lg lg:text-xl font-semibold"><%= r["itineraries"][0]["segments"][0]["arrival"]["iataCode"] %></div>
+                <div class="text-sm lg:text-base">T <%= r["itineraries"][0]["segments"][0]["arrival"]["terminal"] %></div>
+                <div class="text-xs lg:text-sm"><%= r["itineraries"][0]["segments"][0]["arrival"]["at"].to_datetime.strftime("%e %b %Y - %l:%M %p") %></div>
+              </div>
+              <div><%= r["itineraries"][0]["segments"][0]["duration"] %></div>
+              <div>
+                <%= r["itineraries"][0]["segments"][0]["carrierCode"] %>
+                <%= r["itineraries"][0]["segments"][0]["aircraft"]["code"] %>
+                <%= r["itineraries"][0]["segments"][0]["number"] %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <div>
+      
+  <% elsif !!@e %>
+    <div class="text-center mt-44 lg:mt-64">
+        <h1 class="mb-4 text-6xl font-semibold text-red-500">404</h1>
+        <p class="mb-4 text-lg text-gray-600">Oops! Looks like you're lost.</p>
+        <p class="mb-4 text-lg font-light text-gray-500"><%= @e.message %> </p>
+        <div class="animate-bounce">
+          <svg class="mx-auto h-16 w-16 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+          </svg>
+        </div>
+        <p class="mt-4 text-gray-600">
+          Let's get you back 
+          <%= link_to "home", root_url, class: "text-blue-500" %>.
+        </p>
+      </div>
+    </div>
+  <% else %>
+    <div>Something went wrong!</div>
+  <% end %>
+</div>

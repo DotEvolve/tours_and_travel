@@ -1,0 +1,10 @@
+<fieldset data-oneway-return-target="additionalFields" data-type="one_way">
+  <div class="block lg:inline-block relative">
+    <%= form.date_field :departure_date, class: "pl-20 pr-4 py-3 w-full lg:w-[450px] rounded-lg focus:outline-none focus:border focus:border-gray-800 bg-gray-200" %>
+    <%# <input type="text" class="" data-controller="daterangepicker"> %>
+    <div class="absolute top-3 left-3 flex items-center justify-center">
+      Dep
+      <%= image_tag "calendar.svg", class: "h-6 w-6" %>
+    </div>
+  </div>
+</fieldset>
